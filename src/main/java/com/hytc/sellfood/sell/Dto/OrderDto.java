@@ -1,22 +1,15 @@
-package com.hytc.sellfood.sell.ObjectMapper;
+package com.hytc.sellfood.sell.Dto;
 
+import com.hytc.sellfood.sell.ObjectMapper.OrderDetial;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
-/**
- * 订单实体
- */
 @Data
-@Entity
-@DynamicUpdate
-public class OrderMaster {
+public class OrderDto {
 
-    @Id
     private String orderId;
 
     /**
@@ -64,5 +57,7 @@ public class OrderMaster {
      * 修改时间
      */
     private LocalDateTime updateTime;
+
+    private List<OrderDetial> orderDetialList;
 
 }
