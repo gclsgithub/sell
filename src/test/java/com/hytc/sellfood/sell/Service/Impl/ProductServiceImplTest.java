@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.awt.*;
 import java.awt.print.Pageable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -52,7 +53,7 @@ public class ProductServiceImplTest {
         p.setCategoeryType("99");
         p.setProductStock(100L);
         p.setProductIcon(null);
-        p.setProductSinglePrice(3.12D);
+        p.setProductSinglePrice(new BigDecimal("3.12"));
         p.setProductName("皮蛋瘦肉粥");
         p.setDelFlag("0");
         p.setProductStatus(0);

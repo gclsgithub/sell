@@ -1,5 +1,6 @@
 package com.hytc.sellfood.sell.Service;
 
+import com.hytc.sellfood.sell.Dto.CartDto;
 import com.hytc.sellfood.sell.ObjectMapper.ProductInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ public interface ProductService {
 
     /**
      * 保存商品信息
+     *
      * @param productInfo
      */
     void savaProductInfo(ProductInfo productInfo);
@@ -50,8 +52,16 @@ public interface ProductService {
     void updateProductCount(String productId, Integer changeCount);
 
 
-    //加库存
+    /**
+     * 加库存
+     */
+    void increaseStock(List<CartDto> cartDtoList);
 
+    /**
+     * 减库存
+     *
+     * @param cartDtoList
+     */
+    void decreaseStock(List<CartDto> cartDtoList);
 
-    //减库存
 }

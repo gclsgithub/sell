@@ -29,7 +29,6 @@ public class OrderDetialMapperTest {
         orderDetial.setProductId("1");
         orderDetial.setProductQuantity(12);
         orderDetial.setProductSinglePrice(new BigDecimal("12.1"));
-        orderDetial.setProductSummaryPrice(new BigDecimal("20.11"));
         OrderDetial orderDetialSave = orderDetialMapper.save(orderDetial);
         Assert.assertNotNull(orderDetialSave);
     }

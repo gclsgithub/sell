@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,7 +23,7 @@ public class ProductInfoTest {
         ProductInfo info = new ProductInfo();
         info.setProductId("4");
         info.setProductName("女生专属");
-        info.setProductSinglePrice(new Double(11.2));
+        info.setProductSinglePrice(new BigDecimal(11.2));
         info.setProductIcon("aaa");
         info.setProductStock(new Long(111));
         info.setCategoeryType("1");

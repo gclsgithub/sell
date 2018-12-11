@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -26,7 +27,7 @@ public class ProductInfo {
     /**
      * 商品单价
      */
-    private Double productSinglePrice;
+    private BigDecimal productSinglePrice;
 
     /**
      * 商品库存
@@ -62,7 +63,7 @@ public class ProductInfo {
     public ProductInfo() {
     }
 
-    public ProductInfo(String productName, Double productSinglePrice, Long productStock, String productDescription, String productIcon, String categoeryType) {
+    public ProductInfo(String productName, BigDecimal productSinglePrice, Long productStock, String productDescription, String productIcon, String categoeryType) {
         this.productName = productName;
         this.productSinglePrice = productSinglePrice;
         this.productStock = productStock;

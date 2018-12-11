@@ -40,11 +40,6 @@ public class OrderDetial {
     private BigDecimal productSinglePrice;
 
     /**
-     * 商品总价
-     */
-    private BigDecimal productSummaryPrice;
-
-    /**
      * 商品数量
      */
     private Integer productQuantity;
