@@ -9,13 +9,11 @@ import com.hytc.sellfood.sell.ObjectMapper.OrderMaster;
 import com.hytc.sellfood.sell.ObjectMapper.ProductInfo;
 import com.hytc.sellfood.sell.Repository.OrderDetialMapper;
 import com.hytc.sellfood.sell.Repository.OrderMasterMapper;
-import com.hytc.sellfood.sell.Repository.ProductMapper;
 import com.hytc.sellfood.sell.Service.OrderService;
 import com.hytc.sellfood.sell.Service.ProductService;
 import com.hytc.sellfood.sell.enums.OrderDetailEnum;
 import com.hytc.sellfood.sell.enums.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +28,6 @@ import utils.MapperUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,8 +78,8 @@ public class OrderServiceImpl implements OrderService {
 
         //写入订单数据库(orderMaster)
         OrderMaster orderMaster = new OrderMaster();
+        orderDto.setOrderId(oderId);
         BeanUtils.copyProperties(orderDto, orderMaster);
-        orderMaster.setOrderId(oderId);
         orderMaster.setOrderAmount(bigDecimal);
         orderMaster.setPayStatus(0);
         orderMaster.setOrderStatus(0);
@@ -139,24 +136,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderDto cancle(OrderDto orderDto) {
+    public OrderDto cancle(OrderDto inputOrderDto) {
 
-        OrderMaster orderMaster = null;
 
+        OrderMaster orderMaster = orderMasterMapper.findById(inputOrderDto.getOrderId()).get();
+
+        List<OrderDetial> orderDetialList = orderDetialMapper.findByOrderId(inputOrderDto.getOrderId());
+
+        inputOrderDto.setOrderDetialList(orderDetialList);
         //查询订单状态
-        if (!OrderDetailEnum.NEW.getCode().equals(orderDto.getOrderStatus())) {
-            log.error("【取消订单】状态不正确 oderId ={}", orderDto.getOrderId());
+        if (OrderDetailEnum.IS_COMPLETE.getCode().equals(orderMaster.getOrderStatus())) {
+            log.error("【取消订单】状态不正确 oderId ={}", orderMaster.getOrderId());
             throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
         }
 
-        orderDto.setOrderStatus(OrderDetailEnum.CANCLE.getCode());
+        orderMaster.setOrderStatus(OrderDetailEnum.CANCLE.getCode());
 
-        try {
-            orderMaster = MapperUtil.coverBean2AnotherBean(orderDto, OrderMaster.class);
-        } catch (Exception e) {
-            log.error("【取消订单】 工具类转换异常");
-            throw new SellException(ResultEnum.ORDER_NOT_EXIT);
-        }
 
         //修改订单状态
         OrderMaster resultOrderMaster = orderMasterMapper.save(orderMaster);
@@ -167,13 +162,13 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //判断是否存在订单
-        if (CollectionUtils.isEmpty(orderDto.getOrderDetialList())) {
+        if (CollectionUtils.isEmpty(inputOrderDto.getOrderDetialList())) {
             log.error("【取消订单】 无订单信息");
             throw new SellException(ResultEnum.ORDER_DETIAL_EMPTY);
         }
 
         //返还库存
-        productService.increaseStock(orderDto.getOrderDetialList().parallelStream().map(e ->
+        productService.increaseStock(inputOrderDto.getOrderDetialList().parallelStream().map(e ->
         {
             CartDto cartDto = new CartDto();
             cartDto.setProductQuantity(String.valueOf(e.getProductQuantity()));
@@ -183,15 +178,16 @@ public class OrderServiceImpl implements OrderService {
 
 
         //退款
-        if (OrderDetailEnum.IS_PAY.getCode().equals(orderDto.getPayStatus())) {
+        if (OrderDetailEnum.IS_PAY.getCode().equals(inputOrderDto.getPayStatus())) {
             //TODO
         }
 
 
-        return orderDto;
+        return inputOrderDto;
     }
 
     @Override
+    @Transactional
     public OrderDto finish(OrderDto orderDto) {
         //查询订单状态,只有是新订单才可以改变状态
         OrderMaster orderMaster = null;
@@ -217,6 +213,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDto pay(OrderDto orderDto) {
         //查询订单状态,只有是新订单才可以改变状态
         OrderMaster orderMaster = null;

@@ -1,6 +1,9 @@
 package com.hytc.sellfood.sell.Dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hytc.sellfood.sell.ObjectMapper.OrderDetial;
+import com.hytc.sellfood.sell.serializer.LocalDateTimeGetTimeStamp;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -51,12 +54,15 @@ public class OrderDto {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = LocalDateTimeGetTimeStamp.class)
     private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
+    @JsonSerialize(using = LocalDateTimeGetTimeStamp.class)
     private LocalDateTime updateTime;
+
 
     private List<OrderDetial> orderDetialList;
 
