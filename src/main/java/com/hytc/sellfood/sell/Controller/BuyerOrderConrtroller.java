@@ -70,7 +70,7 @@ public class BuyerOrderConrtroller {
      * @param size
      * @return
      */
-    @GetMapping("/list")
+        @GetMapping("/list")
     public ResultVO<List<OrderDto>> listOrder(@RequestParam("openid") String openId,
                                               @RequestParam(value = "page", defaultValue = "0") Integer page,
                                               @RequestParam(value = "size", defaultValue = "10") Integer size) {
@@ -123,8 +123,6 @@ public class BuyerOrderConrtroller {
     public ResultVO cancle(@RequestParam("openid") String openId,
                            @RequestParam("orderId") String orderId) {
 
-        //TODO
-        //安全认证
         ResultVO resultVO = new ResultVO();
 
         buyerService.cancleOrder(openId,orderId);

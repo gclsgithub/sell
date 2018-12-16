@@ -15,7 +15,9 @@ public enum ResultEnum {
     UPDATE_ERROR(15,"更新失败"),
     ORDER_DETIAL_EMPTY(16,"订单详情为空"),
     CAR_EMPTY(17,"购物车不能为空"),
-    OWNER_EXCEPTION(18,"用户失效")
+    OWNER_EXCEPTION(18,"用户失效"),
+    WECHAT_MP_ERROR(19,"微信认证失效")
+
     ;
 
     private Integer code;

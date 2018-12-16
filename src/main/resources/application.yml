@@ -13,3 +13,7 @@ server:
   servlet:
     context-path: /sell
 
+wechat:
+    myAppId: wx72e4ed6315740e26
+    myAppSecret: bb2bf118d72d8ab8e01f4b8553b18d0a
+
