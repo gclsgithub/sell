@@ -47,10 +47,22 @@ public class ProductServiceImplTest {
     }
 
     @Test
+    public void upProduct(){
+        productService.onSale("2");
+        System.out.println("OK");
+    }
+
+    @Test
+    public void downProduct(){
+        productService.offSale("2");
+        System.out.println("OK");
+    }
+
+    @Test
     public void savaProductInfo() {
 
         ProductInfo p = new ProductInfo();
-        p.setCategoeryType("99");
+        p.setCategoeryType(99);
         p.setProductStock(100L);
         p.setProductIcon(null);
         p.setProductSinglePrice(new BigDecimal("3.12"));
@@ -61,6 +73,7 @@ public class ProductServiceImplTest {
         p.setProductId("2");
         productService.savaProductInfo(p);
     }
+
 
     @Test
     public void deleteByProductId() {

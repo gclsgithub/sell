@@ -14,7 +14,7 @@ public class ProductVO <T> {
 
     /** 类别编号 */
     @JsonProperty("type")
-    private  Integer ProductCategoeryType;
+    private Integer type;
 
     /**  商品信息 */
     @JsonProperty("foods")

@@ -10,6 +10,14 @@ import java.util.List;
 public interface ProductService {
 
     /**
+     * 根据Type查找ProductInfo
+     *
+     * @param categoeryType
+     * @return
+     */
+    List<ProductInfo> findProductByProductCategoeryType(String categoeryType);
+
+    /**
      * 查找商品信息
      *
      * @param productId
@@ -64,4 +72,16 @@ public interface ProductService {
      */
     void decreaseStock(List<CartDto> cartDtoList);
 
+    /**
+     * 上架
+     *
+     * @param productId
+     */
+    void onSale(String productId);
+
+    /**
+     *
+     * @param productId
+     */
+    void offSale(String productId);
 }

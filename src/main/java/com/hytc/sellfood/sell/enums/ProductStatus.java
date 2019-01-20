@@ -3,7 +3,7 @@ package com.hytc.sellfood.sell.enums;
 import lombok.Getter;
 
 @Getter
-public enum ProductStatus {
+public enum ProductStatus implements CodeEnum{
     UP(1, "上架"),
     DOWN(0, "下架");
     private Integer code;

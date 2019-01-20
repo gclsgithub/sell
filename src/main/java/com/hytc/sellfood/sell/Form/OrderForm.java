@@ -1,11 +1,8 @@
 package com.hytc.sellfood.sell.Form;
 
-import com.hytc.sellfood.sell.Dto.CartDto;
-import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 public class OrderForm {

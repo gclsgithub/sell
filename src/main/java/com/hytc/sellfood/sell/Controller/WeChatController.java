@@ -4,7 +4,7 @@ import com.hytc.sellfood.sell.Exception.SellException;
 import com.hytc.sellfood.sell.enums.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class WeChatController {
         String url = "http://hytc.natapp1.cc/sell/wechat/userinfo";
 
         //方法调用
-        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_BASE,"");
+        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE,returnUrl);
 
         return "redirect:"+redirectUrl;
     }
@@ -36,7 +36,7 @@ public class WeChatController {
     @GetMapping("/userinfo")
     private String userinfo(@RequestParam("code")String code,
                           @RequestParam("state")String returnUrl){
-
+        log.info("转发方法登陆");
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
 
         try {
@@ -50,7 +50,7 @@ public class WeChatController {
         String openId = wxMpOAuth2AccessToken.getOpenId();
 
 
-        return "redirect:"+returnUrl+"?openid="+openId;
+        return "redirect:"+returnUrl;
 
     }
 }

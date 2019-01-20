@@ -1,10 +1,13 @@
 package com.hytc.sellfood.sell.Dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hytc.sellfood.sell.ObjectMapper.OrderDetial;
+import com.hytc.sellfood.sell.enums.OrderStatusEnum;
+import com.hytc.sellfood.sell.enums.PayStatusEnum;
 import com.hytc.sellfood.sell.serializer.LocalDateTimeGetTimeStamp;
 import lombok.Data;
+import utils.EnumUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -65,5 +68,15 @@ public class OrderDto {
 
 
     private List<OrderDetial> orderDetialList;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum(){
+        return EnumUtils.loopCode(orderStatus,OrderStatusEnum.class);
+    }
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum(){
+        return EnumUtils.loopCode(payStatus,PayStatusEnum.class);
+    }
+
 
 }

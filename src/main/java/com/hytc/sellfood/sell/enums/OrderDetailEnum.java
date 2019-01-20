@@ -3,7 +3,7 @@ package com.hytc.sellfood.sell.enums;
 import lombok.Getter;
 
 @Getter
-public enum OrderDetailEnum {
+public enum OrderDetailEnum implements CodeEnum{
 
     NEW(0,"新建"),
     NOT_PAY(0,"未支付"),

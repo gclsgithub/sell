@@ -5,8 +5,9 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 订单实体
@@ -14,8 +15,10 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @DynamicUpdate
-public class OrderMaster {
+public class OrderMaster implements Serializable {
 
+
+    private static final long serialVersionUID = -569974664605494920L;
     @Id
     private String orderId;
 
@@ -58,11 +61,11 @@ public class OrderMaster {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 修改时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 }

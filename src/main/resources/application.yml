@@ -8,12 +8,24 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+  redis:
+    host: 172.20.10.7
+    port: 6379
 
 server:
-  servlet:
     context-path: /sell
 
-wechat:
-    myAppId: wx72e4ed6315740e26
-    myAppSecret: bb2bf118d72d8ab8e01f4b8553b18d0a
+path:
+  realPath: http://hytc.natapp1.cc
+  projectHeader: /sell
 
+wechat:
+    myAppId: wx367760769f18a4e1
+    myAppSecret: 72086a7c0d0a12e8977e14eb184b6676
+    mchId:
+    mchKey:
+    keyPath:
+    notifyUrl: http://hytc.natapp1.cc/sell/pay/notify
+
+logging:
+  level: payease.dataobject.mapper:trace

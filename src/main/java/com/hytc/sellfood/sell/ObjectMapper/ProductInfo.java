@@ -1,18 +1,28 @@
 package com.hytc.sellfood.sell.ObjectMapper;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hytc.sellfood.sell.enums.ProductStatus;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import utils.EnumUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 
+/**
+ * @author gcl
+ */
 @Entity
 @DynamicUpdate
 @Data
-public class ProductInfo {
+public class ProductInfo implements Serializable {
 
+    private static final long serialVersionUID = 9206280627966471523L;
     /**
      * 产品
      */
@@ -47,7 +57,7 @@ public class ProductInfo {
     /**
      * 类别编号
      */
-    private String categoeryType;
+    private Integer categoeryType;
 
     /**
      * 删除flag  0 未删除 ，1 删除
@@ -60,10 +70,14 @@ public class ProductInfo {
      */
     private Integer productStatus;
 
+    private Date createTime;
+
+    private Date updateTime;
+
     public ProductInfo() {
     }
 
-    public ProductInfo(String productName, BigDecimal productSinglePrice, Long productStock, String productDescription, String productIcon, String categoeryType) {
+    public ProductInfo(String productName, BigDecimal productSinglePrice, Long productStock, String productDescription, String productIcon, Integer categoeryType) {
         this.productName = productName;
         this.productSinglePrice = productSinglePrice;
         this.productStock = productStock;
@@ -71,4 +85,10 @@ public class ProductInfo {
         this.productIcon = productIcon;
         this.categoeryType = categoeryType;
     }
+
+    @JsonIgnore
+    public ProductStatus getProductStatusEnum(){
+        return EnumUtils.loopCode(productStatus,ProductStatus.class);
+    }
+
 }

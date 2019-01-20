@@ -5,14 +5,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
 @UpdateTimestamp
-public class OrderDetial {
+public class OrderDetial implements Serializable {
 
+    private static final long serialVersionUID = -6509810321621090801L;
     /**
      * detialId
      */
@@ -52,5 +54,5 @@ public class OrderDetial {
     /**
      * 修改时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }

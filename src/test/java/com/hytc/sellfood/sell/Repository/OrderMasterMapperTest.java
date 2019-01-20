@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -34,7 +35,7 @@ public class OrderMasterMapperTest {
         orderMaster.setOrderAmount(new BigDecimal("12.12"));
         orderMaster.setOrderStatus(0);
         orderMaster.setPayStatus(0);
-        orderMaster.setUpdateTime(LocalDateTime.now());
+        orderMaster.setUpdateTime(new Date());
         orderMaster.setOrderId("1231231");
         OrderMaster savedOderMaster =  orderMasterMapper.save(orderMaster);
         Assert.assertNotNull(savedOderMaster);

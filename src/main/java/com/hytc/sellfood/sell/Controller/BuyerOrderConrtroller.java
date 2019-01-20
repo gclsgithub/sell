@@ -9,6 +9,7 @@ import com.hytc.sellfood.sell.ObjectMapper.OrderDetial;
 import com.hytc.sellfood.sell.Service.BuyerService;
 import com.hytc.sellfood.sell.Service.OrderService;
 import com.hytc.sellfood.sell.VO.ResultVO;
+import com.hytc.sellfood.sell.constant.CookieConstant;
 import com.hytc.sellfood.sell.enums.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import utils.CookieUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,10 +77,13 @@ public class BuyerOrderConrtroller {
         @GetMapping("/list")
     public ResultVO<List<OrderDto>> listOrder(@RequestParam("openid") String openId,
                                               @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                              @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                                              @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                              HttpServletResponse response) {
 
         ResultVO<List<OrderDto>> resultVO = new ResultVO<>();
-
+        //TODO
+        openId = "123";
+        CookieUtils.setCookie(response, "openid",openId,-1);
         if (StringUtils.isEmpty(openId)) {
             log.error("【查询订单】用户openid 为空");
             throw new SellException(ResultEnum.PRRAM_NOT_TRUE);

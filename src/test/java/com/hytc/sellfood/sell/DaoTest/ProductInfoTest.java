@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductInfoTest {
 
     @Autowired
@@ -21,12 +21,14 @@ public class ProductInfoTest {
     @Test
     public void test1() {
         ProductInfo info = new ProductInfo();
-        info.setProductId("4");
+        info.setProductId("6");
         info.setProductName("女生专属");
         info.setProductSinglePrice(new BigDecimal(11.2));
         info.setProductIcon("aaa");
         info.setProductStock(new Long(111));
-        info.setCategoeryType("1");
+        info.setCategoeryType(1);
+        info.setDelFlag("0");
+        info.setProductStatus(0);
         productMapper.save(info);
 
         List<ProductInfo> productInfoList = productMapper.findAll();
@@ -36,13 +38,13 @@ public class ProductInfoTest {
 
     @Test
     public void test2() {
-        List<ProductInfo> productInfoList = productMapper.findByProductStatus(1);
+        List<ProductInfo> productInfoList = productMapper.findByProductStatus(0);
         productInfoList.stream().forEach(prodct -> System.out.println(prodct.getProductName()));
     }
 
     @Test
     public void test3(){
-        List<ProductInfo> productInfos = productMapper.findByCategoeryType("2");
+        List<ProductInfo> productInfos = productMapper.findByCategoeryType(98);
         System.out.println(productInfos);
     }
 }

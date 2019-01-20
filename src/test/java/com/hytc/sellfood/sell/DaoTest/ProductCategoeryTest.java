@@ -22,7 +22,7 @@ public class ProductCategoeryTest {
 
     @Test
     public void Test1() {
-        ProductCategoery productCategoery2 = productCategoeryMapper.findById(1).get();
+        ProductCategoery productCategoery2 = productCategoeryMapper.findOne(1);
         System.out.print(productCategoery2);
     }
 
@@ -51,14 +51,14 @@ public class ProductCategoeryTest {
 
     @Test
     public void update(){
-        ProductCategoery productCategoery = productCategoeryMapper.findById(1).get();
+        ProductCategoery productCategoery = productCategoeryMapper.findOne(1);
         productCategoery.setCategoeryType(99);
         productCategoeryMapper.save(productCategoery);
     }
 
     @Test
     public void del(){
-        productCategoeryMapper.deleteById(5);
+        productCategoeryMapper.delete(1);
     }
 
     @Test

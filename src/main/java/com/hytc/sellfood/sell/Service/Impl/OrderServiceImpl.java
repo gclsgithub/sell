@@ -11,6 +11,7 @@ import com.hytc.sellfood.sell.Repository.OrderDetialMapper;
 import com.hytc.sellfood.sell.Repository.OrderMasterMapper;
 import com.hytc.sellfood.sell.Service.OrderService;
 import com.hytc.sellfood.sell.Service.ProductService;
+import com.hytc.sellfood.sell.Controller.WebSocket;
 import com.hytc.sellfood.sell.enums.OrderDetailEnum;
 import com.hytc.sellfood.sell.enums.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMasterMapper orderMasterMapper;
 
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     @Transactional
@@ -95,13 +99,16 @@ public class OrderServiceImpl implements OrderService {
         }).collect(Collectors.toList());
         productService.decreaseStock(cartDtoList);
 
+        //想WebSocket发送消息
+
+        webSocket.sendMessage("订单创建");
         return orderDto;
     }
 
     @Override
     public OrderDto findOne(String orderId) {
 
-        OrderMaster orderMaster = orderMasterMapper.findById(orderId).get();
+        OrderMaster orderMaster = orderMasterMapper.findOne(orderId);
 
         if (ObjectUtils.isEmpty(orderMaster)) {
             throw new SellException(ResultEnum.ORDER_NOT_EXIT);
@@ -129,7 +136,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderDto> orderDtos = MapperUtil.mapList2List(orderMasterPage.getContent(), OrderDto.class);
 
-        Page<OrderDto> orderDtoPage = new PageImpl<OrderDto>(orderDtos, pageable, orderMasterPage.getTotalElements());
+        Page<OrderDto> orderDtoPage = new PageImpl<>(orderDtos, pageable, orderMasterPage.getTotalElements());
 
         return orderDtoPage;
     }
@@ -139,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto cancle(OrderDto inputOrderDto) {
 
 
-        OrderMaster orderMaster = orderMasterMapper.findById(inputOrderDto.getOrderId()).get();
+        OrderMaster orderMaster = orderMasterMapper.findOne(inputOrderDto.getOrderId());
 
         List<OrderDetial> orderDetialList = orderDetialMapper.findByOrderId(inputOrderDto.getOrderId());
 
@@ -237,5 +244,15 @@ public class OrderServiceImpl implements OrderService {
 
 
         return orderDto;
+    }
+
+    @Override
+    public Page<OrderDto> findAllList(Pageable pageable) {
+        Page<OrderMaster> page = orderMasterMapper.findAll(pageable);
+
+        List<OrderDto> orderDtoList = MapperUtil.mapList2List(page.getContent(), OrderDto.class);
+
+        Page<OrderDto> dtoPage = new PageImpl<>(orderDtoList, pageable, page.getTotalElements());
+        return dtoPage;
     }
 }

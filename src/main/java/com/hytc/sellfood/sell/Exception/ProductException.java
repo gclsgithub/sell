@@ -12,4 +12,8 @@ public class ProductException extends RuntimeException {
         super(msg.getMessage());
         this.code = msg.getCode();
     }
+
+    public Integer getCode() {
+        return code;
+    }
 }

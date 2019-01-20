@@ -32,5 +32,5 @@ public interface ProductMapper extends JpaRepository<ProductInfo,String> {
      * 根据Type 查找单个ProductInfo
      * @param categoery
      */
-    List<ProductInfo> findByCategoeryType(String categoery);
+    List<ProductInfo> findByCategoeryType(Integer categoery);
 }
